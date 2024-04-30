@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #1a1a1d 0%, black 100%);
+      }
+      header {
+        background: #c3073f;
+        color: #efe7f4;
+        padding: 10px;
+        text-align: center;
+      }
+      section {
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        color: #333;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 20px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+      }
+      input[type="submit"] {
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        background-color: #c3073f;
+      }
+      input[type="submit"]:hover {
+        background: #6f2232;
+      }
+      footer {
+        background-color: #c3073f;
+        color: #efe7f4;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Feedback</h1>
+    </header>
+
+    <section id="feedback-form">
+      <h2>Leave Your Feedback</h2>
+      <form action="#" method="post">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required />
+        <label for="email">Your Email:</label>
+        <input type="text" id="email" name="email" required />
+        <label for="message">Your Message:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        <input type="submit" value="Submit Feedback" />
+      </form>
+    </section>
+
+    <footer>
+      <p>© 2024 Our Platform. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

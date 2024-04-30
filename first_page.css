@@ -1,0 +1,98 @@
+firstPage.css * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Urbanist", sans-serif;
+}
+body {
+  background: linear-gradient(to right, #1a1a1d 0%, black 100%);
+  overflow: hidden;
+}
+a{
+    text-decoration: none;
+    color: #fff;
+    font-family: "Urbanist",sans-serif;
+}
+a:hover{
+  color: #c3073f;
+}
+li{
+  list-style: none;
+  letter-spacing: 0.05rem;
+}
+/* nav bar */
+.nav-bar-div ul{
+    display: flex;
+    justify-content: space-around;
+    margin: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.login-signUp {
+  margin-left: 76%;
+}
+.login-signUp-button {
+  padding: 0.8rem 0.95rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  border-radius: 20px;
+  border: none;
+  background-color: transparent;
+  border: 2px solid #950740;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.login-signUp-button a{
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+}
+.login-signUp-button:hover {
+  background: #6f2232;
+}
+.login-signUp ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin-top: 0.8rem;
+}
+/* Logo and heading */
+.logo-div iframe{
+  position: relative;
+  top: 53%;
+  left: 46%;
+  transform: translate(-50% -50%);
+}
+.h1-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0.2rem;
+  font-weight: 900;
+  font-size: 5rem;
+}
+/* Animation */
+.h1 {
+  text-align: center;
+  color: #fff;
+  letter-spacing: 0.5rem;
+  text-shadow: -1px 2px 3px rgba(236, 247, 76, 0.2);
+}
+span {
+  color: #c3073f;
+}
+/** footer */
+.footer-div{
+  position: relative;
+  top: 14rem;
+}
+.footer-div ul{
+  display: flex;
+    justify-content: flex-end;
+    margin: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    gap: 2rem;
+}

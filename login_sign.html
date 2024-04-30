@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login & Signup Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2 id="formTitle">Login</h2>
+    <div id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">Email:</label>
+        <input type="email" id="loginEmail" placeholder="Enter email" />
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password:</label>
+        <input type="password" id="loginPassword" placeholder="Enter password" />
+      </div>
+      <button class="btn" onclick="login()">Login</button>
+      <p>
+        Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a>
+      </p>
+    </div>
+
+    <div id="signupForm" class="hidden">
+      <div class="form-group">
+        <label for="signupName">Name:</label>
+        <input type="text" id="signupName" name="name" placeholder="Enter name" />
+      </div>
+      <div class="form-group">
+        <label for="signupEmail">Email:</label>
+        <input type="email" id="signupEmail" name="email" placeholder="Enter email" />
+      </div>
+      <div class="form-group">
+        <label for="signupPassword">Password:</label>
+        <input type="password" id="signupPassword" name="password" placeholder="Enter password" />
+      </div>
+      <button class="btn" onclick="signup()">Sign Up</button>
+      <p>
+        Already have an account? <a href="#" onclick="toggleForms()">Login</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    async function login() {
+      var email = document.getElementById("loginEmail").value;
+      var password = document.getElementById("loginPassword").value;
+      console.log(
+        "Login clicked with email:",
+        email,
+        "and password:",
+        password
+      );
+      try {
+        localStorage.setItem('userEmail', email)
+        const response = await fetch("http://localhost:5000/user/login", {
+          method: "POST",
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(response);
+        window.location.href = "machine_learning.html";
+      } catch (err) {
+        console.log(err);
+      }
+
+      // Add login logic here
+
+      // Redirect to algo.html after successful login
+      // window.location.href = "algo.html";
+    }
+
+    async function signup() {
+      var name = document.getElementById("signupName").value;
+      var email = document.getElementById("signupEmail").value;
+      var password = document.getElementById("signupPassword").value;
+      console.log(
+        "Sign Up clicked with name:",
+        name,
+        "email:",
+        email,
+        "and password:",
+        password
+      );
+
+      try {
+        const response = await fetch("http://localhost:5000/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(response);
+        window.location.href = "machine_learning.html";
+      } catch (err) {
+        console.log(err);
+      }
+
+      // Add signup logic here
+
+      // Redirect to algo.html after successful sign up
+      // window.location.href = "algo.html";
+    }
+
+    function toggleForms() {
+      var loginForm = document.getElementById("loginForm");
+      var signupForm = document.getElementById("signupForm");
+
+      if (loginForm.classList.contains("hidden")) {
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+        document.getElementById("formTitle").innerText = "Login";
+      } else {
+        loginForm.classList.add("hidden");
+        signupForm.classList.remove("hidden");
+        document.getElementById("formTitle").innerText = "Sign Up";
+      }
+    }
+  </script>
+</body>
+
+</html>

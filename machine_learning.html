@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Display</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      background: rgb(238, 174, 202);
+      background: radial-gradient(circle,
+          rgba(238, 174, 202, 1) 0%,
+          rgba(148, 187, 233, 1) 100%);
+      display: flex;
+      /* Added to make the container flex */
+      justify-content: center;
+      /* Added to center the content horizontally */
+      align-items: center;
+      /* Added to center the content vertically */
+      min-height: 100vh;
+      /* Added to fill the viewport vertically */
+    }
+
+    .container {
+      display: flex;
+      max-width: 1200px;
+      background-color: #bdb9e3;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.779);
+      overflow: hidden;
+      /* Added to prevent content overflow */
+    }
+
+    .left-side,
+    .right-side {
+      flex: 1;
+      /* Equal width for both sides */
+      padding: 20px;
+      overflow: auto;
+      /* Added for scroll if content exceeds */
+    }
+
+    .right-side {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+      background-color: rgb(222, 238, 233);
+    }
+
+    .navbar {
+      background-color: #bdb9e3;
+      overflow: hidden;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .search-container {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #0c0c0c;
+      border-radius: 5px;
+    }
+
+    .algorithm-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    }
+
+    .algorithm-list li {
+      margin-bottom: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      background-color: #fff;
+      padding: 8px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .algorithm-list li:hover {
+      background-color: #eee;
+    }
+
+    .button-container {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .button:hover {
+      background-color: #a700b3;
+    }
+
+    .output-area {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #c2d2e5;
+      height: 400px;
+      /* Adjust height as needed */
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+
+    textarea {
+      background: rgb(230, 182, 203);
+    }
+
+    .compiler-link {
+      font-size: 16px;
+      color: #007bff;
+      text-decoration: none;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .compiler-link:hover {
+      text-decoration: underline;
+    }
+
+    .compiler-dropdown {
+      font-size: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  </div>
+  <div class="container">
+
+
+    <div class="left-side">
+      <div class="navbar">
+        <a href="algorithm.html" >Sample Code</a>
+        <a href="index.html">Home</a>
+        <a href="about_us.html">About Us</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="help_us.html">Help</a>
+        <a href="login_sign.html">Login/SignUp</a>
+        <a href="./recommendation/index.html">Search History & Recommendations</a>
+      </div>
+      <div class="header">Code List</div>
+      <div class="search-container">
+        <!-- Combined search input -->
+        <input type="text" class="search-input" placeholder="Search for an algorithm..." id="searchInput"
+          oninput="filterAlgorithmList()">
+        <ul class="algorithm-list" id="code-names">
+          <li onclick="displayCode('binarySearch')">Binary Search</li>
+          <li onclick="displayCode('linearSearch')">Linear Search</li>
+          <li onclick="displayCode('bubbleSort')">Bubble Sort</li>
+          <li onclick="displayCode('mergeSort')">Merge Sort</li>
+          <li onclick="displayCode('quickSort')">Quick Sort</li>
+          <li onclick="displayCode('dfs')">Depth-First Search (DFS)</li>
+          <li onclick="displayCode('bfs')">Breadth-First Search (BFS)</li>
+          <li onclick="displayCode('dijkstra')">Dijkstra's Algorithm</li>
+          <li onclick="displayCode('fibonacci')">Fibonacci Series</li>
+        </ul>
+        <div class="button-container">
+          <button class="button" onclick="runCode()">Run</button>
+        </div>
+        <div class="right-side">
+          <div class="header">Code Runner</div>
+          <div class="output-area">
+            <textarea id="code-textarea" rows="22" cols="90"></textarea>
+          </div>
+          <div class="share-buttons">
+            Share:
+            <a href="#" onclick="shareOnTwitter()">Twitter</a>
+            <a href="#" onclick="shareOnFacebook()">Facebook</a>
+            <!-- Add more social media sharing buttons -->
+          </div>
+          <div class="container">
+            <h2>Simple Linear Regression</h2>
+            <form id="linearRegressionForm">
+              <label for="xInput">Enter X:</label>
+              <input type="number" id="xInput" name="xInput" required>
+              <label for="yInput">Enter Y:</label>
+              <input type="number" id="yInput" name="yInput" required>
+              <button type="button" onclick="addData()">Add Data</button>
+            </form>
+            <div class="result" id="result"></div>
+          </div>
+
+          <div class="comments-section">
+            <!-- Disqus commenting system -->
+            <div id="disqus_thread"></div>
+
+            <script>
+              var disqus_config = function () {
+                this.page.url = 'http://coderunner007.com'; // Replace with your website URL
+                this.page.identifier = "code-display"; // Unique identifier for the page
+              };
+              (function () {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://coderunner007.disqus.com/embed.js'; // Replace 'coderunner007' with your Disqus shortname
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+              })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered
+                by Disqus.</a></noscript>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Include TensorFlow.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+
+    <!-- Include Brain.js library -->
+    <script src="https://unpkg.com/brain.js"></script>
+    <script>
+      let data = [];
+
+      function addData() {
+        const x = parseFloat(document.getElementById('xInput').value);
+        const y = parseFloat(document.getElementById('yInput').value);
+
+        if (!isNaN(x) && !isNaN(y)) {
+          data.push({ x, y });
+          calculateRegression();
+        } else {
+          alert('Please enter valid numeric values for X and Y.');
+        }
+      }
+
+      function calculateRegression() {
+        const n = data.length;
+        let sumX = 0;
+        let sumY = 0;
+        let sumXY = 0;
+        let sumXX = 0;
+
+        for (let i = 0; i < n; i++) {
+          const { x, y } = data[i];
+          sumX += x;
+          sumY += y;
+          sumXY += x * y;
+          sumXX += x * x;
+        }
+
+        const meanX = sumX / n;
+        const meanY = sumY / n;
+
+        const slope = (sumXY - sumX * meanY) / (sumXX - sumX * meanX);
+        const intercept = meanY - slope * meanX;
+
+        const regressionLine = y = `${slope.toFixed(2)}x + ${intercept.toFixed(2)}`;
+        displayResult(regressionLine);
+      }
+
+      function displayResult(regressionLine) {
+        document.getElementById('result').textContent =
+          `RegressionLine: ${regressionLine}`;
+      }
+
+      function filterAlgorithmList() {
+        var input, filter, ul, li, i, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("code-names");
+        li = ul.getElementsByTagName('li');
+        for (i = 0; i < li.length; i++) {
+          txtValue = li[i].textContent || li[i].innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+          } else {
+            li[i].style.display = "none";
+          }
+        }
+      }
+
+      async function displayCode(codeName) {
+
+        const response = await fetch("http://localhost:5000/history/add-search", {
+          body: JSON.stringify({
+            email: localStorage.getItem('userEmail'),
+            word: codeName
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: 'POST'
+        })
+
+        console.log(await response.json())
+
+        var codeTextArea = document.getElementById("code-textarea");
+        switch (codeName) {
+          case "binarySearch":
+            codeTextArea.value = `#include <stdio.h>
+
+int binarySearch(int arr[], int n, int target) {
+    int left = 0, right = n - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target)
+            return mid;
+        if (arr[mid] < target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return -1;
+}
+
+int main() {
+    int n, target;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter %d elements in sorted order:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter the target element to search: ");
+    scanf("%d", &target);
+
+    int result = binarySearch(arr, n, target);
+    if (result != -1)
+        printf("Element %d is present at index %d\n", target, result);
+    else
+        printf("Element %d is not present in the array\n", target);
+
+    return 0;
+}`;
+            break;
+          case "linearSearch":
+            codeTextArea.value = `  #include <stdio.h>
+
+int linearSearch(int arr[], int n, int target) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == target)
+            return i; // Return the index if the target is found
+    }
+    return -1; // Return -1 if the target is not found
+}
+
+int main() {
+    int n, target;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter the target element to search: ");
+    scanf("%d", &target);
+
+    int result = linearSearch(arr, n, target);
+    if (result != -1)
+        printf("Element %d is present at index %d\n", target, result);
+    else
+        printf("Element %d is not present in the array\n", target);
+
+    return 0;
+}`;
+
+            break;
+          case "bubbleSort":
+            codeTextArea.value = `#include <stdio.h>
+
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    bubbleSort(arr, n);
+
+    printf("Sorted array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}`;
+
+            break;
+          case "mergeSort":
+            codeTextArea.value = `// Merge Sort
+function mergeSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
+
+    const mid = Math.floor(arr.length / 2);
+    const left = mergeSort(arr.slice(0, mid));
+    const right = mergeSort(arr.slice(mid));
+    return merge(left, right);
+}
+
+function merge(left, right) {
+    let result = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+
+    while (leftIndex < left.length && rightIndex < right.length) {
+        if (left[leftIndex] < right[rightIndex]) {
+            result.push(left[leftIndex]);
+            leftIndex++;
+        } else {
+            result.push(right[rightIndex]);
+            rightIndex++;
+        }
+    }
+
+    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+}
+
+// Usage:
+const arr = [64, 34, 25, 12, 22, 11, 90];
+console.log(mergeSort(arr)); // Output: [11, 12, 22, 25, 34, 64, 90]`;
+            break;
+          case "quickSort":
+            codeTextArea.value = ` #include <stdio.h>
+
+void swap(int* a, int* b) {
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    quickSort(arr, 0, n - 1);
+
+    printf("Sorted array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}`;
+
+            break;
+
+          case "dfs":
+            codeTextArea.value = `#include <stdio.h>
+
+#define MAX 100
+
+int visited[MAX];
+int adjMatrix[MAX][MAX];
+int n; // Number of vertices
+
+void dfs(int vertex) {
+    printf("%d ", vertex);
+    visited[vertex] = 1;
+
+    for (int i = 0; i < n; i++) {
+        if (adjMatrix[vertex][i] && !visited[i]) {
+            dfs(i);
+        }
+    }
+}
+
+int main() {
+    int start;
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter the adjacency matrix:\\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &adjMatrix[i][j]);
+        }
+    }
+
+    printf("Enter the starting vertex: ");
+    scanf("%d", &start);
+
+    printf("DFS traversal starting from vertex %d: ", start);
+    dfs(start);
+    printf("\\n");
+
+    return 0;
+}`;
+            break;
+          case "bfs":
+            codeTextArea.value = `#include <stdio.h>
+
+#define MAX 100
+
+int visited[MAX];
+int adjMatrix[MAX][MAX];
+int queue[MAX];
+int front = -1, rear = -1;
+int n; // Number of vertices
+
+void enqueue(int vertex) {
+    if (rear == MAX - 1) {
+        printf("Queue is full\n");
+    } else {
+        if (front == -1) {
+            front = 0;
+        }
+        rear++;
+        queue[rear] = vertex;
+    }
+}
+
+int dequeue() {
+    int item;
+    if (front == -1 || front > rear) {
+        printf("Queue is empty\n");
+        return -1;
+    } else {
+        item = queue[front];
+        front++;
+        return item;
+    }
+}
+
+int isEmpty() {
+    if (front == -1 || front > rear) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+void bfs(int vertex) {
+    printf("%d ", vertex);
+    visited[vertex] = 1;
+    enqueue(vertex);
+
+    while (!isEmpty()) {
+        int currentVertex = dequeue();
+        for (int i = 0; i < n; i++) {
+            if (adjMatrix[currentVertex][i] && !visited[i]) {
+                printf("%d ", i);
+                visited[i] = 1;
+                enqueue(i);
+            }
+        }
+    }
+}
+
+int main() {
+    int start;
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &adjMatrix[i][j]);
+        }
+    }
+
+    printf("Enter the starting vertex: ");
+    scanf("%d", &start);
+
+    printf("BFS traversal starting from vertex %d: ", start);
+    bfs(start);
+    printf("\n");
+
+    return 0;
+} `;
+            break;
+          case "dijkstra":
+            codeTextArea.value = ` #include <stdio.h>
+#include <limits.h>
+
+#define V 100
+
+int minDistance(int dist[], int sptSet[]) {
+    int min = INT_MAX, min_index;
+    
+    for (int v = 0; v < V; v++) {
+        if (sptSet[v] == 0 && dist[v] <= min) {
+            min = dist[v];
+            min_index = v;
+        }
+    }
+    
+    return min_index;
+}
+
+void printSolution(int dist[], int src, int n) {
+    printf("Vertex \t Distance from Source\n");
+    for (int i = 0; i < n; i++)
+        printf("%d \t %d\n", i, dist[i]);
+}
+
+void dijkstra(int graph[V][V], int src, int n) {
+    int dist[V];
+    int sptSet[V];
+    
+    for (int i = 0; i < V; i++) {
+        dist[i] = INT_MAX;
+        sptSet[i] = 0;
+    }
+    
+    dist[src] = 0;
+    
+    for (int count = 0; count < n - 1; count++) {
+        int u = minDistance(dist, sptSet);
+        sptSet[u] = 1;
+        
+        for (int v = 0; v < n; v++) {
+            if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v]) {
+                dist[v] = dist[u] + graph[u][v];
+            }
+        }
+    }
+    
+    printSolution(dist, src, n);
+}
+
+int main() {
+    int n;
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    int graph[V][V];
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &graph[i][j]);
+        }
+    }
+
+    int src;
+    printf("Enter the source vertex: ");
+    scanf("%d", &src);
+
+    dijkstra(graph, src, n);
+    
+    return 0;
+}`;
+
+            break;
+          case "fibonacci":
+            codeTextArea.value = `#include <stdio.h>
+
+int fibonacci(int n) {
+    if (n <= 1)
+        return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main() {
+    int n;
+    printf("Enter the number of terms: ");
+    scanf("%d", &n);
+    printf("Fibonacci Sequence: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", fibonacci(i));
+    }
+    printf("\n");
+    return 0;
+}`;
+
+            break;
+          default:
+            codeTextArea.value = "Code not found.";
+        }
+      }
+
+      function runCode() {
+        var codeTextArea = document.getElementById("code-textarea");
+        var code = codeTextArea.value;
+        var codeUrl;
+        if (code.includes("binarySearch")) {
+          codeUrl = "https://cplayground.com/?p=panther-wolf-hornet";
+        } else if (code.includes("linearSearch")) {
+          codeUrl = "https://cplayground.com/?p=donkey-hyena-hippo";
+        } else if (code.includes("bubbleSort")) {
+          codeUrl = "https://cplayground.com/?p=leopard-elk-tamarin";
+        } else if (code.includes("mergeSort")) {
+          codeUrl = "https://cplayground.com/?p=ram-sardine-falcon";
+        } else if (code.includes("quickSort")) {
+          codeUrl = "https://cplayground.com/?p=chicken-lapwing-squid";
+        } else if (code.includes("dfs")) {
+          codeUrl = "https://cplayground.com/?p=dogfish-frog-komodo";
+        } else if (code.includes("bfs")) {
+          codeUrl = "https://cplayground.com/?p=giraffe-pheasant-mink";
+        } else if (code.includes("dijkstra")) {
+          codeUrl = "https://cplayground.com/?p=pigeon-loris-hornet";
+        } else if (code.includes("fibonacci")) {
+          codeUrl = "https://cplayground.com/?p=ram-wallaby-starling";
+        } else {
+          console.log("Code not found.");
+          return;
+        }
+        window.open(codeUrl, "_blank");
+      }
+      // Function to train a simple classification model using TensorFlow.js
+      async function trainClassificationModel() {
+        // Define data
+        const xData = tf.tensor2d([[0, 0], [0, 1], [1, 0], [1, 1]]);
+        const yData = tf.tensor2d([[0], [1], [1], [0]]);
+
+        // Define a sequential model
+        const model = tf.sequential();
+        model.add(tf.layers.dense({ units: 10, inputShape: [2], activation: 'relu' }));
+        model.add(tf.layers.dense({ units: 1, activation: 'sigmoid' }));
+
+        // Compile the model
+        model.compile({ optimizer: 'adam', loss: 'binaryCrossentropy', metrics: ['accuracy'] });
+
+        // Train the model
+        await model.fit(xData, yData, { epochs: 100 });
+
+        return model;
+      }
+
+      // Function to make predictions using the trained classification model
+      function predictClassification(model, inputData) {
+        const inputTensor = tf.tensor2d(inputData, [1, inputData.length]);
+        const prediction = model.predict(inputTensor);
+        return prediction.dataSync()[0];
+      }
+
+      // Function to train a simple clustering model using Brain.js
+      function trainClusteringModel() {
+        const net = new brain.NeuralNetwork();
+        const trainingData = [
+          { input: [0, 0], output: [0] },
+          { input: [0, 1], output: [1] },
+          { input: [1, 0], output: [1] },
+          { input: [1, 1], output: [0] }
+        ];
+
+        net.train(trainingData);
+        return net;
+      }
+      // Function to make predictions using the trained clustering model
+      function predictClustering(model, inputData) {
+        const output = model.run(inputData);
+        return output[0];
+      }
+      function shareOnTwitter() {
+        // Function to share code snippet on Twitter
+        var codeTextArea = document.getElementById("code-textarea").value;
+        var url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(codeTextArea);
+        window.open(url, "_blank");
+      }
+
+      function shareOnFacebook() {
+        // Function to share code snippet on Facebook
+        var codeTextArea = document.getElementById("code-textarea").value;
+        var url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(codeTextArea);
+        window.open(url, "_blank");
+      }
+      var disqus_config = function () {
+        this.page.url = 'http://coderunner007.com'; // Replace with your website URL
+        this.page.identifier = "code-display"; // Unique identifier for the page
+      };
+      (function () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://coderunner007.disqus.com/embed.js'; // Replace 'coderunner007' with your Disqus shortname
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+
+    </script>
+</body>
+
+</html>

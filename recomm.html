@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recommendations Page</title>
+    <style>
+      /* Add your CSS styling here */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f5f5f5;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .search-history {
+        list-style-type: none;
+        padding: 0;
+        margin-bottom: 30px;
+        position: relative;
+      }
+
+      .search-history li {
+        display: inline;
+        margin-right: 10px;
+        position: relative;
+        animation: drip 1s ease-out;
+        animation-fill-mode: both;
+        opacity: 0;
+      }
+
+      .search-history button {
+        background-color: #3498db;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        color: white;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+
+      .search-history button:hover {
+        background-color: #2980b9;
+      }
+      .navbar {
+        background-color: #bdb9e3;
+        overflow: hidden;
+      }
+
+      .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      .navbar a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+      .recommendation {
+        background-color: #ffffff;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        position: relative;
+      }
+
+      .recommendation:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .related-algorithms {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 20px;
+      }
+
+      .related-algorithms li {
+        margin-bottom: 10px;
+      }
+
+      .related-algorithms button {
+        background-color: #95a5a6;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        color: white;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+
+      .related-algorithms button:hover {
+        background-color: #7f8c8d;
+      }
+
+      @keyframes drip {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="navbar">
+      <a href="algorithm.html">Sample Code</a>
+      <a href="index.html">Home</a>
+      <a href="about_us.html">About Us</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="help_us.html">Help</a>
+      <a href="login_sign.html">Login/SignUp</a>
+    </div>
+    <h1>Search History</h1>
+    <ul class="search-history" id="searchHistory"></ul>
+
+    <h1>Recommendations</h1>
+    <div id="recommendations"></div>
+
+    <script>
+      const searchHistoryElement = document.getElementById("searchHistory");
+      const recommendationsElement = document.getElementById("recommendations");
+      async function getUserSearchHistory() {
+        const userEmail = localStorage.getItem("userEmail");
+        if (!userEmail) {
+          alert("User not logged in");
+          return;
+        }
+        const response = await fetch(
+          `http://localhost:5000/user/search-history?email=${userEmail}`
+        );
+        const jsonResponse = await response.json();
+        const history = jsonResponse.data[0].history || [];
+
+        // Clear existing recommendations
+        recommendationsElement.innerHTML = "";
+
+        history.forEach((searchedAlgorithm, index) => {
+          const li = document.createElement("li");
+          const button = document.createElement("button");
+          button.textContent = searchedAlgorithm;
+          button.onclick = () => redirectToAlgorithmPage(searchedAlgorithm);
+          li.style.animationDelay = `${index * 0.1}s`;
+          li.appendChild(button);
+          searchHistoryElement.appendChild(li);
+        });
+
+        const recommendations = generateRecommendations(history);
+        recommendations.forEach((recommendation, index) => {
+          const div = document.createElement("div");
+          div.classList.add("recommendation");
+          div.textContent = recommendation.text;
+
+          const relatedAlgorithmsList = document.createElement("ul");
+          relatedAlgorithmsList.classList.add("related-algorithms");
+          recommendation.relatedAlgorithms.forEach((algorithm) => {
+            const li = document.createElement("li");
+            const button = document.createElement("button");
+            button.textContent = algorithm;
+            button.onclick = () => redirectToAlgorithmPage(algorithm);
+            li.appendChild(button);
+            relatedAlgorithmsList.appendChild(li);
+          });
+
+          div.appendChild(relatedAlgorithmsList);
+          div.style.animationDelay = `${(history.length + index) * 0.1}s`; // Adding delay for dripping effect
+          recommendationsElement.appendChild(div);
+        });
+      }
+      function redirectToAlgorithmPage(algorithm) {
+        window.location.href = `algorithm.html#${algorithm}`;
+      }
+
+      function generateRecommendations(history) {
+        const algorithmRelationships = {
+          binarySearch: ["linearSearch", "quickSort"],
+          linearSearch: ["binarySearch", "bubbleSort"],
+          bubbleSort: ["linearSearch", "mergeSort"],
+          mergeSort: ["bubbleSort", "quickSort"],
+          quickSort: ["binarySearch", "mergeSort"],
+          dfs: ["bfs", "dijkstra"],
+          bfs: ["dfs", "dijkstra"],
+          dijkstra: ["dfs", "bfs"],
+          fibonacci: [],
+        };
+
+        const recommendations = [];
+
+        history.forEach((searchedAlgorithm) => {
+          const relatedAlgorithms =
+            algorithmRelationships[searchedAlgorithm] || [];
+          relatedAlgorithms.forEach((algorithm) => {
+            recommendations.push({
+              text: `Recommendation for ${algorithm}`,
+              relatedAlgorithms: algorithmRelationships[algorithm] || [],
+            });
+          });
+        });
+
+        return recommendations;
+      }
+
+      getUserSearchHistory();
+    </script>
+  </body>
+</html>
