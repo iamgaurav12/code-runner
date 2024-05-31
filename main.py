@@ -1,2 +1,4 @@
 def divide(a, b):
-    return a / 0  # Deliberate runtime error
+    if b == 0:
+        raise ValueError("Division by zero")
+    return a / b
