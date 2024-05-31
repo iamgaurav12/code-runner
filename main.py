@@ -1,4 +1,2 @@
-def divide(a, b):
-    if b == 0:
-        raise ValueError("Division by zero")
-    return a / b
+def add(a, b):
+    return a - b  # Deliberate logical error
